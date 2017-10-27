@@ -69,6 +69,7 @@ class myApp extends Component {
     addSelected(type,value){
         let selectedIngredients = Object.assign({}, this.state.selectedIngredients);    //creating copy of object
         let selectedIngredient=selectedIngredients[type];
+        if(selectedIngredient.indexOf(+value)==-1)
         selectedIngredient.push(+value);
         this.setState({selectedIngredients});
     }

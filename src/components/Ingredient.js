@@ -44,7 +44,7 @@ class Ingredient extends Component {
     changeSuggestions = (value) => {
         console.log('Value received from onChange: ' + value)
         const itemsSuggestion = this.props.items.filter(function(item, index, array){
-            return (item.name.toLowerCase().indexOf(value.toLowerCase()) == 0)
+            return (item.name.toLowerCase().indexOf(value.toLowerCase()) === 0)
         });
         this.setState({
             suggestions : itemsSuggestion.map( (item)=>{
@@ -58,19 +58,7 @@ class Ingredient extends Component {
     }
 
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.items) {
 
-            this.setState({
-                suggestions : nextProps.items.map( (item)=>{
-                        return ({
-                           label: item.name,
-                           value: item.id
-                        });
-                })
-            })
-        }
-    }
     render() {
 
         if (!this.props.items) return <p>Loading {this.props.title}...</p>
