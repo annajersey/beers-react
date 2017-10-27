@@ -26,6 +26,8 @@ class myApp extends Component {
         }
         this.handleCheckbox = this.handleCheckbox.bind(this);
         this.Search = this.Search.bind(this);
+        this.addSelected = this.addSelected.bind(this);
+        this.removeSelected = this.removeSelected.bind(this);
     }
     getJSON(url,type){
         fetch(url)
@@ -53,12 +55,21 @@ class myApp extends Component {
         this.getJSON(yeastsUrl,"yeasts");
     }
     handleCheckbox(type,value,isChecked){
+        if(isChecked)
+            this.addSelected(type,value)
+        else
+            this.removeSelected(type,value)
+    }
+    removeSelected(type,value){
         let selectedIngredients = Object.assign({}, this.state.selectedIngredients);    //creating copy of object
         let selectedIngredient=selectedIngredients[type];
-        if(isChecked)
-            selectedIngredient.push(value);
-        else
-            selectedIngredient.splice(selectedIngredient.indexOf(value), 1);
+        selectedIngredient.splice(selectedIngredient.indexOf(value), 1);
+        this.setState({selectedIngredients});
+    }
+    addSelected(type,value){
+        let selectedIngredients = Object.assign({}, this.state.selectedIngredients);    //creating copy of object
+        let selectedIngredient=selectedIngredients[type];
+        selectedIngredient.push(+value);
         this.setState({selectedIngredients});
     }
     Search(){
@@ -77,9 +88,19 @@ class myApp extends Component {
         return (
             <div className="App">
                 <div className="container">
-                    <Ingredient selected={this.state.selectedIngredients.hops} items={hops} title="Hops" type="hops" handleCheckbox={this.handleCheckbox}/>
-                    <Ingredient selected={this.state.selectedIngredients.malts} items={malts} title="Malts" type="malts" handleCheckbox={this.handleCheckbox}/>
-                    <Ingredient selected={this.state.selectedIngredients.yeasts} items={yeasts} title="Yeasts" type="yeasts" handleCheckbox={this.handleCheckbox}/>
+                    <Ingredient
+                        selected={this.state.selectedIngredients.hops}
+                        items={hops}
+                        title="Hops"
+                        type="hops"
+                        handleCheckbox={this.handleCheckbox}
+                        addSelected={this.addSelected}
+                        removeSelected={this.removeSelected}
+                    />
+                    <Ingredient selected={this.state.selectedIngredients.malts} items={malts} title="Malts" type="malts"
+                                handleCheckbox={this.handleCheckbox} addSelected={this.addSelected}  removeSelected={this.removeSelected}/>
+                    <Ingredient selected={this.state.selectedIngredients.yeasts} items={yeasts} title="Yeasts" type="yeasts"
+                                handleCheckbox={this.handleCheckbox} addSelected={this.addSelected}  removeSelected={this.removeSelected}/>
                     <div className="container">
                         <div className="row">
                             <div className="col-lg-1"><h3>Search</h3>

@@ -13,6 +13,10 @@ class Ingredient extends Component {
         this.handleToggleHops = this.handleToggleHops.bind(this);
         this.handleCheckbox = this.handleCheckbox.bind(this);
         this.getItem = this.getItem.bind(this);
+        this.onTockenAdd = this.onTockenAdd.bind(this);
+        this.isSelected = this.isSelected.bind(this);
+        this.onTockenDelete = this.onTockenDelete.bind(this);
+
     }
 
     handleToggleHops(e) {
@@ -27,14 +31,20 @@ class Ingredient extends Component {
         return this.props.items.find(function (item) { return item.id == id; });
 
     }
-    onTockenDelete(p){
-
-        console.log(p)
+    isSelected(id) {
+         return (this.props.selected.indexOf(id) > -1)
+     }
+    onTockenDelete(selected){
+        this.props.removeSelected(this.props.type,selected.value);
     }
+    onTockenAdd(selected){
+        this.props.addSelected(this.props.type,selected.value);
+    }
+
     changeSuggestions = (value) => {
         console.log('Value received from onChange: ' + value)
         const itemsSuggestion = this.props.items.filter(function(item, index, array){
-            return (item.name.toLowerCase().indexOf(value.toLowerCase()) > -1)
+            return (item.name.toLowerCase().indexOf(value.toLowerCase()) == 0)
         });
         this.setState({
             suggestions : itemsSuggestion.map( (item)=>{
@@ -44,7 +54,10 @@ class Ingredient extends Component {
                 });
             })
         });
+
     }
+
+
     componentWillReceiveProps(nextProps) {
         if (nextProps.items) {
 
@@ -65,7 +78,7 @@ class Ingredient extends Component {
             return (
                 <div className="form-check">
                     <label className="form-check-label">
-                        <input className="form-check-input" onClick={this.handleCheckbox} type="checkbox" value={item.id} />
+                        <input checked={this.isSelected(item.id)} className="form-check-input" onClick={this.handleCheckbox} type="checkbox" value={item.id} />
                             {item.name}
                     </label>
 
@@ -81,6 +94,7 @@ class Ingredient extends Component {
                     </div>
                     <div className="col-lg-11">
                         <Autocomplete
+                            onAdd={this.onTockenAdd}
                             onDelete={this.onTockenDelete}
                             suggestions={this.state.suggestions }
                             onChange={this.changeSuggestions}
