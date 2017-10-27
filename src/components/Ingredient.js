@@ -57,11 +57,15 @@ class Ingredient extends Component {
 
     }
 
-
+    componentWillReceiveProps(nextProps){
+        if(this.props.selected != nextProps.selected){
+            //TODO check if selection is valid
+        }
+    }
 
     render() {
 
-        if (!this.props.items) return <p>Loading {this.props.title}...</p>
+        if (!this.props.items) return <p><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>Loading {this.props.title}...</p>
         this.itemsCheckboxes = this.props.items.map( (item,key)=>{
             return (
                 <div className="form-check">
