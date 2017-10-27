@@ -68,6 +68,7 @@ class myApp extends Component {
         let beersUrl = searchUrl+'?'+Object.keys(selectedIngredients)
             .map(type => type + '=' + selectedIngredients[type].join(','))
             .join('&');
+        if(this.state.term) beersUrl+='&search='+this.state.term;
         this.getJSON(beersUrl,"beers");
     }
     render() {
@@ -79,6 +80,15 @@ class myApp extends Component {
                     <Ingredient selected={this.state.selectedIngredients.hops} items={hops} title="Hops" type="hops" handleCheckbox={this.handleCheckbox}/>
                     <Ingredient selected={this.state.selectedIngredients.malts} items={malts} title="Malts" type="malts" handleCheckbox={this.handleCheckbox}/>
                     <Ingredient selected={this.state.selectedIngredients.yeasts} items={yeasts} title="Yeasts" type="yeasts" handleCheckbox={this.handleCheckbox}/>
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-lg-1"><h3>Search</h3>
+                            </div>
+                            <div className="col-lg-11">
+                                <input className="form-control" type="text" value={this.state.term} onChange={(ev) => this.setState({term: ev.target.value})} />
+                            </div>
+                        </div>
+                    </div>
                     <button onClick={this.Search} className="btn-lg btn-primary">Search</button>
                     <Beers beers={beers} loading={this.state.beersLoading}/>
                 </div>

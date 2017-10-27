@@ -5,7 +5,9 @@ class Beers extends Component {
     render() {
 
         if (this.props.loading) return 'Loading...';
-        else if (!this.props.beers) return null;
+
+        else if (this.props.beers === null) return null;
+        else if (!this.props.beers.length) return 'No results';
 
         return (
             <div className="table-responsive beers-table">

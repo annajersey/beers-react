@@ -1,5 +1,5 @@
 .container{margin: 30px;}
-.container h3{text-align:center; font-size: 23px; cursor:pointer; display:block; margin:0;}
+.container h3{ font-size: 23px; cursor:pointer; display:block; margin:0;}
 i.glyphicon{font-size:17px;}
 .row{margin:20px 10px;}
 .beers-table{margin-top:15px;}
