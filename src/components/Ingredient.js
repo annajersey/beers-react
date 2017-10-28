@@ -29,7 +29,6 @@ class Ingredient extends Component {
 
     getItem(id){
         return this.props.items.find(function (item) { return item.id == id; });
-
     }
     isSelected(id) {
          return (this.props.selected.indexOf(id) > -1)
@@ -57,18 +56,14 @@ class Ingredient extends Component {
 
     }
 
-    componentWillReceiveProps(nextProps){
-        if(this.props.selected != nextProps.selected){
-            //TODO check if selection is valid
-        }
-    }
+
 
     render() {
 
         if (!this.props.items) return <p><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>Loading {this.props.title}...</p>
         this.itemsCheckboxes = this.props.items.map( (item,key)=>{
             return (
-                <div className="form-check">
+                <div className="form-check checkbox">
                     <label className="form-check-label">
                         <input checked={this.isSelected(item.id)} className="form-check-input" onClick={this.handleCheckbox} type="checkbox" value={item.id} />
                             {item.name}
@@ -82,7 +77,7 @@ class Ingredient extends Component {
             <div className="container">
                 <div className="row">
                     <div className="col-lg-1"><h3 onClick={this.handleToggleHops}>{this.props.title}
-                        <br />&#9660;</h3>
+                        <span>&#9660;</span></h3>
                     </div>
                     <div className="col-lg-11">
                         <Autocomplete

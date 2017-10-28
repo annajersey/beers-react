@@ -67,6 +67,7 @@ class myApp extends Component {
         this.setState({selectedIngredients});
     }
     addSelected(type,value){
+        if(!this.state[type].find(function (item) { return item.id == value; })) return false;
         let selectedIngredients = Object.assign({}, this.state.selectedIngredients);    //creating copy of object
         let selectedIngredient=selectedIngredients[type];
         if(selectedIngredient.indexOf(+value)==-1)
@@ -90,7 +91,7 @@ class myApp extends Component {
             <div className="App">
                 <div className="container">
                     <Ingredient
-                        selected={this.state.selectedIngredients.hops}
+                        selected={this.state.selectedIngredients.hops.concat([])}
                         items={hops}
                         title="Hops"
                         type="hops"
@@ -98,9 +99,9 @@ class myApp extends Component {
                         addSelected={this.addSelected}
                         removeSelected={this.removeSelected}
                     />
-                    <Ingredient selected={this.state.selectedIngredients.malts} items={malts} title="Malts" type="malts"
+                    <Ingredient selected={this.state.selectedIngredients.malts.concat([])} items={malts} title="Malts" type="malts"
                                 handleCheckbox={this.handleCheckbox} addSelected={this.addSelected}  removeSelected={this.removeSelected}/>
-                    <Ingredient selected={this.state.selectedIngredients.yeasts} items={yeasts} title="Yeasts" type="yeasts"
+                    <Ingredient selected={this.state.selectedIngredients.yeasts.concat([])} items={yeasts} title="Yeasts" type="yeasts"
                                 handleCheckbox={this.handleCheckbox} addSelected={this.addSelected}  removeSelected={this.removeSelected}/>
                     <div className="container">
                         <div className="row">

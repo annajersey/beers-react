@@ -11,19 +11,19 @@ class Beers extends Component {
         );
 
         else if (this.props.beers === null) return null;
-        else if (!this.props.beers.length) return 'No results';
+        else if (!this.props.beers.length) return (<div>No results</div>);
 
         return (
             <div className="table-responsive beers-table">
-                <table className="table table-hover table-striped">
+                <table className="table table-dark table-hover table-striped">
                     <tbody>
                     { this.props.beers.map((beer) => {
                         return (<tr className="d-flex">
                                 <td className="col-sm-3">{beer.beerTitle}</td>
                                 <td className="col-sm-3">{beer.beerSubTitle}</td>
                                 <td><b className="clearfix">ABV</b><br />{beer.basics_abv}%</td>
-                            <td>IBU<br />{beer.basics_abv}</td>
-                            <td>OG<br />{beer.basics_target_og}</td>
+                            <td><b className="clearfix">IBU</b>{beer.basics_abv}</td>
+                            <td><b className="clearfix">OG</b>{beer.basics_target_og}</td>
 
                             </tr>
                         );

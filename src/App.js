@@ -7,7 +7,9 @@ class App extends Component {
     return (
       <div className="App">
           <nav class="navbar navbar-inverse navbar-static-top">
+              <div class="container">
               <a class="navbar-brand" href="#"><span class="icon-bar"></span>Home Brewer</a>
+              </div>
           </nav>
 
           <MyApp />

@@ -1,11 +1,16 @@
+body{
+    font-family: 'Roboto' !important;
+}
 .container{margin: 30px;}
-.container h3{ font-size: 23px; cursor:pointer; display:block; margin:0;}
-i.glyphicon{font-size:17px;}
+.container h3{ padding-top:10px; font-size: 23px; cursor:pointer; display:block; margin:0;}
+.container h3 span{color:dimgray;font-size: 16px; display:block;}
+i.glyphicon{font-size:16px; }
 .row{margin:20px 10px;}
 .beers-table{margin-top:15px;}
 .glyphicon-refresh-animate {
     -animation: spin .7s infinite linear;
     -webkit-animation: spin2 .7s infinite linear;
+    margin-right:5px;
 }
 
 @-webkit-keyframes spin2 {
@@ -18,5 +23,7 @@ i.glyphicon{font-size:17px;}
     to { transform: scale(1) rotate(360deg);}
 }
 .loader{margin-left:15px;}
-
+.navbar .container{margin-top:5px;margin-bottom:5px;}
+.container .theme_tag__25f{margin:0}
+.checkbox label.form-check-label{font-weight:bold}
 
