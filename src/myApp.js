@@ -4,7 +4,7 @@ import './App.css';
 import Beers from './components/Beers'
 import Ingredient from './components/Ingredient'
 
-const apiUrl = "http://178.150.105.118:8082/beers/json";
+const apiUrl = "https://178.150.105.118:8082/beers/json";
 const hopsUrl = apiUrl+"/hops";
 const maltsUrl = apiUrl+"/malts";
 const yeastsUrl = apiUrl+"/yeasts";
