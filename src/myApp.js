@@ -4,11 +4,11 @@ import './App.css';
 import Beers from './components/Beers'
 import Ingredient from './components/Ingredient'
 
-const apiUrl = "http://178.150.105.118:8082";
-const hopsUrl = apiUrl+"/beers/json/hops";
-const maltsUrl = apiUrl+"/beers/json/malts";
-const yeastsUrl = apiUrl+"/beers/json/yeasts";
-const searchUrl = apiUrl+"/beers/json/search";
+const apiUrl = "http://178.150.105.118:8082/beers/json";
+const hopsUrl = apiUrl+"/hops";
+const maltsUrl = apiUrl+"/malts";
+const yeastsUrl = apiUrl+"/yeasts";
+const searchUrl = apiUrl+"/search";
 class myApp extends Component {
     constructor(props) {
         super(props)
