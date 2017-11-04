@@ -3,7 +3,7 @@ body{
 }
 .container{margin: 30px;}
 .container h3{ padding-top:10px; font-size: 23px; cursor:pointer; display:block; margin:0;}
-.container h3 span{color:dimgray;font-size: 16px; display:block;}
+h3 .fa-caret-down{color:dimgray;font-size: 26px; display:block;}
 i.glyphicon{font-size:16px; }
 .row{margin:20px 10px;}
 .beers-table{margin-top:15px;}
@@ -26,4 +26,7 @@ i.glyphicon{font-size:16px; }
 .navbar .container{margin-top:5px;margin-bottom:5px;}
 .container .theme_tag__25f{margin:0}
 .checkbox label.form-check-label{font-weight:bold}
+body a{color:#333; text-decoration:none}
+body a:hover{text-decoration:none}
+body a:hover{text-decoration:none}
 

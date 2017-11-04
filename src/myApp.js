@@ -3,12 +3,14 @@ import './App.css';
 
 import Beers from './components/Beers'
 import Ingredient from './components/Ingredient'
+import Helper from './components/Helper'
+const urls=Helper.getUrls();
 
-const apiUrl = "https://178.150.105.118:8082/beers/json";
-const hopsUrl = apiUrl+"/hops";
-const maltsUrl = apiUrl+"/malts";
-const yeastsUrl = apiUrl+"/yeasts";
-const searchUrl = apiUrl+"/search";
+const hopsUrl = urls.hopsUrl;
+const maltsUrl = urls.maltsUrl;
+const yeastsUrl = urls.yeastsUrl;
+const searchUrl = urls.searchUrl;
+
 class myApp extends Component {
     constructor(props) {
         super(props)
@@ -29,7 +31,8 @@ class myApp extends Component {
         this.addSelected = this.addSelected.bind(this);
         this.removeSelected = this.removeSelected.bind(this);
     }
-    getJSON(url,type){
+     getJSON(url,type){
+        console.log(url);
         fetch(url)
             .then(response => {
                 if (!response.ok) {
@@ -63,7 +66,9 @@ class myApp extends Component {
     removeSelected(type,value){
         let selectedIngredients = Object.assign({}, this.state.selectedIngredients);    //creating copy of object
         let selectedIngredient=selectedIngredients[type];
-        selectedIngredient.splice(selectedIngredient.indexOf(value), 1);
+        console.log(value)
+        console.log(selectedIngredient.indexOf(+value))
+        selectedIngredient.splice(selectedIngredient.indexOf(+value), 1);
         this.setState({selectedIngredients});
     }
     addSelected(type,value){
@@ -85,6 +90,7 @@ class myApp extends Component {
         this.getJSON(beersUrl,"beers");
     }
     render() {
+        //console.log(Helper.urls);
         if (this.state.requestFailed) return <p>Request Failed!</p>
         const {hops,malts,yeasts,beers} = this.state;
         return (
@@ -99,7 +105,8 @@ class myApp extends Component {
                         addSelected={this.addSelected}
                         removeSelected={this.removeSelected}
                     />
-                    <Ingredient selected={this.state.selectedIngredients.malts.concat([])} items={malts} title="Malts" type="malts"
+                    <Ingredient selected={this.state.selectedIngredients.malts.concat([])}
+                                items={malts} title="Malt" type="malts"
                                 handleCheckbox={this.handleCheckbox} addSelected={this.addSelected}  removeSelected={this.removeSelected}/>
                     <Ingredient selected={this.state.selectedIngredients.yeasts.concat([])} items={yeasts} title="Yeasts" type="yeasts"
                                 handleCheckbox={this.handleCheckbox} addSelected={this.addSelected}  removeSelected={this.removeSelected}/>
@@ -112,7 +119,7 @@ class myApp extends Component {
                             </div>
                         </div>
                     </div>
-                    <button onClick={this.Search} className="btn-lg btn-primary">Search</button>
+                    <button onClick={this.Search} className="btn-lg btn-primary">Keyword</button>
                     <Beers beers={beers} loading={this.state.beersLoading}/>
                 </div>
             </div>

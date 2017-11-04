@@ -24,6 +24,7 @@ class Ingredient extends Component {
         this.setState({toggleBlock: height});
     }
     handleCheckbox(e) {
+        //console.log(e.target.value);
         this.props.handleCheckbox(this.props.type,e.target.value,e.target.checked);
     }
 
@@ -34,7 +35,8 @@ class Ingredient extends Component {
          return (this.props.selected.indexOf(id) > -1)
      }
     onTockenDelete(selected){
-        this.props.removeSelected(this.props.type,selected.value);
+
+        this.props.removeSelected(this.props.type,selected[0].value);
     }
     onTockenAdd(selected){
         this.props.addSelected(this.props.type,selected.value);
@@ -77,7 +79,7 @@ class Ingredient extends Component {
             <div className="container">
                 <div className="row">
                     <div className="col-lg-1"><h3 onClick={this.handleToggleHops}>{this.props.title}
-                        <span>&#9660;</span></h3>
+                        <i className="fa fa-caret-down malts"></i></h3>
                     </div>
                     <div className="col-lg-11">
                         <Autocomplete
