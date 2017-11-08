@@ -112,14 +112,14 @@ class myApp extends Component {
                                 handleCheckbox={this.handleCheckbox} addSelected={this.addSelected}  removeSelected={this.removeSelected}/>
                     <div className="container">
                         <div className="row">
-                            <div className="col-lg-1"><h3>Search</h3>
+                            <div className="col-lg-1"><h3>Keyword</h3>
                             </div>
                             <div className="col-lg-11">
                                 <input className="form-control" type="text" value={this.state.term} onChange={(ev) => this.setState({term: ev.target.value})} />
                             </div>
                         </div>
                     </div>
-                    <button onClick={this.Search} className="btn-lg btn-primary">Keyword</button>
+                    <button onClick={this.Search} className="btn-lg btn-primary">Search</button>
                     <Beers beers={beers} loading={this.state.beersLoading}/>
                 </div>
             </div>
