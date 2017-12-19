@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
 import './App.css';
-
+import {connect} from 'react-redux';
 import Beers from './components/Beers'
 import Ingredient from './components/Ingredient'
 import Helper from './components/Helper'
+import {FormGroup,FormControl} from 'react-bootstrap';
+import {setHops} from './actions';
 const urls=Helper.getUrls();
 
 const hopsUrl = urls.hopsUrl;
@@ -16,20 +18,9 @@ class myApp extends Component {
         super(props)
         this.state = {
             requestFailed: false,
-            hops: null,
-            malts: null,
-            yeasts: null,
-            beers: null,
-            selectedIngredients: {
-                hops: [],
-                malts: [],
-                yeasts: []
-            }
         }
-        this.handleCheckbox = this.handleCheckbox.bind(this);
-        this.Search = this.Search.bind(this);
-        this.addSelected = this.addSelected.bind(this);
-        this.removeSelected = this.removeSelected.bind(this);
+        
+
     }
      getJSON(url,type){
         console.log(url);
@@ -46,6 +37,8 @@ class myApp extends Component {
                     [type]: d,
                     [type+"Loading"]:false
                 })
+                this.props.setHops(d,type);
+
             }, () => {
                 this.setState({
                     requestFailed: true
@@ -57,32 +50,11 @@ class myApp extends Component {
         this.getJSON(maltsUrl,"malts");
         this.getJSON(yeastsUrl,"yeasts");
     }
-    handleCheckbox(type,value,isChecked){
-        if(isChecked)
-            this.addSelected(type,value)
-        else
-            this.removeSelected(type,value)
-    }
-    removeSelected(type,value){
-        let selectedIngredients = Object.assign({}, this.state.selectedIngredients);    //creating copy of object
-        let selectedIngredient=selectedIngredients[type];
-        console.log(value)
-        console.log(selectedIngredient.indexOf(+value))
-        selectedIngredient.splice(selectedIngredient.indexOf(+value), 1);
-        this.setState({selectedIngredients});
-    }
-    addSelected(type,value){
-        if(!this.state[type].find(function (item) { return item.id == value; })) return false;
-        let selectedIngredients = Object.assign({}, this.state.selectedIngredients);    //creating copy of object
-        let selectedIngredient=selectedIngredients[type];
-        if(selectedIngredient.indexOf(+value)==-1)
-        selectedIngredient.push(+value);
-        this.setState({selectedIngredients});
-    }
+
     Search(){
         this.setState({beersLoading:true});
 
-        let selectedIngredients = Object.assign({}, this.state.selectedIngredients);
+        let selectedIngredients = Object.assign({}, this.props.selectedIngredients);
         let beersUrl = searchUrl+'?'+Object.keys(selectedIngredients)
             .map(type => type + '=' + selectedIngredients[type].join(','))
             .join('&');
@@ -91,35 +63,28 @@ class myApp extends Component {
     }
     render() {
         //console.log(Helper.urls);
+        console.log('this.props',this.props);
         if (this.state.requestFailed) return <p>Request Failed!</p>
-        const {hops,malts,yeasts,beers} = this.state;
+        const {hops,malts,yeasts,beers} = this.props;
+
         return (
             <div className="App">
                 <div className="container">
-                    <Ingredient
-                        selected={this.state.selectedIngredients.hops.concat([])}
-                        items={hops}
-                        title="Hops"
-                        type="hops"
-                        handleCheckbox={this.handleCheckbox}
-                        addSelected={this.addSelected}
-                        removeSelected={this.removeSelected}
-                    />
-                    <Ingredient selected={this.state.selectedIngredients.malts.concat([])}
-                                items={malts} title="Malt" type="malts"
-                                handleCheckbox={this.handleCheckbox} addSelected={this.addSelected}  removeSelected={this.removeSelected}/>
-                    <Ingredient selected={this.state.selectedIngredients.yeasts.concat([])} items={yeasts} title="Yeasts" type="yeasts"
-                                handleCheckbox={this.handleCheckbox} addSelected={this.addSelected}  removeSelected={this.removeSelected}/>
+                    <FormGroup>
+                    <Ingredient title="Hops" type="hops" />
+                    <Ingredient  title="Malt" type="malts" />
+                    <Ingredient  title="Yeasts" type="yeasts" />
                     <div className="container">
                         <div className="row">
                             <div className="col-lg-1"><h3>Keyword</h3>
                             </div>
                             <div className="col-lg-11">
-                                <input className="form-control" type="text" value={this.state.term} onChange={(ev) => this.setState({term: ev.target.value})} />
+                                <FormControl type="text" value={this.state.term} onChange={(ev) => this.setState({term: ev.target.value})} />
                             </div>
                         </div>
                     </div>
-                    <button onClick={this.Search} className="btn-lg btn-primary">Search</button>
+                    <button onClick={()=>this.Search()} className="btn-lg btn-primary">Search</button>
+                    </FormGroup>
                     <Beers beers={beers} loading={this.state.beersLoading}/>
                 </div>
             </div>
@@ -127,5 +92,12 @@ class myApp extends Component {
     }
 }
 
+function mapStateToProps(state){
+    console.log('state',state);
+    const {beers=[],selectedIngredients} = state;
+    return {beers,selectedIngredients}
 
-export default myApp;
+}
+export default connect(mapStateToProps,{setHops})(myApp);
+
+

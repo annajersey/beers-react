@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Switch, Route,Link } from 'react-router-dom'
 import MyApp from './myApp'
 import Beer from './components/Beer'
+
 import './App.css';
 const Main = () => (
     <main>

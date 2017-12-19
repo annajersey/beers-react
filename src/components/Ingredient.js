@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import AnimateHeight from 'react-animate-height';
+import {connect} from 'react-redux';
 import Columns from 'react-columns';
 import Autocomplete from '@celebryts/react-autocomplete-tags'
+import {selectIngredient,removeIngredient} from '../actions';
 class Ingredient extends Component {
     constructor(props) {
         super(props)
@@ -16,30 +18,49 @@ class Ingredient extends Component {
         this.onTockenAdd = this.onTockenAdd.bind(this);
         this.isSelected = this.isSelected.bind(this);
         this.onTockenDelete = this.onTockenDelete.bind(this);
+        this.addSelected = this.addSelected.bind(this);
+        this.removeSelected = this.removeSelected.bind(this);
 
     }
 
+     removeSelected(type,value){
+         this.props.removeSelectedIngredient(value,type);
+     }
+     addSelected(type,value){
+         console.log('addSelected');
+         this.props.selectIngredient(value,type);
+     }
     handleToggleHops(e) {
         const height = this.state.toggleBlock ? 0 : 'auto';
         this.setState({toggleBlock: height});
     }
+
     handleCheckbox(e) {
-        //console.log(e.target.value);
-        this.props.handleCheckbox(this.props.type,e.target.value,e.target.checked);
+        console.log(e.target.value);
+        //this.handleCheckbox(this.props.type,e.target.value,e.target.checked);
+        const type=this.props.type;
+        const value=e.target.value;
+        if(e.target.checked)
+            this.addSelected(type,value)
+        else
+            this.removeSelected(type,value)
     }
 
     getItem(id){
         return this.props.items.find(function (item) { return item.id == id; });
     }
     isSelected(id) {
-         return (this.props.selected.indexOf(id) > -1)
+        if(id==73) {console.log('check 73',this.props.selected,this.props.selected.indexOf(id));}
+
+        return (this.props.selected.indexOf(id) > -1)
      }
     onTockenDelete(selected){
 
-        this.props.removeSelected(this.props.type,selected[0].value);
+        this.removeSelected(this.props.type,selected[0].value);
     }
     onTockenAdd(selected){
-        this.props.addSelected(this.props.type,selected.value);
+
+        this.addSelected(this.props.type,selected.value);
     }
 
     changeSuggestions = (value) => {
@@ -67,7 +88,10 @@ class Ingredient extends Component {
             return (
                 <div className="form-check checkbox">
                     <label className="form-check-label">
-                        <input checked={this.isSelected(item.id)} className="form-check-input" onClick={this.handleCheckbox} type="checkbox" value={item.id} />
+                        <input checked={this.isSelected(item.id)}
+                               className="form-check-input"
+                               onClick={this.handleCheckbox}
+                               type="checkbox" value={item.id} />
                             {item.name}
                     </label>
 
@@ -90,8 +114,6 @@ class Ingredient extends Component {
                             tags={this.props.selected.map(id => {return {label: this.getItem(id).name,
                                 value: this.getItem(id).id }})}
                         />
-                        {/*<input type="text" className="form-control"*/}
-                               {/*value={this.props.selected.map(id => this.getItem(id).name).join()}/>*/}
 
                     </div>
                 </div>
@@ -105,6 +127,13 @@ class Ingredient extends Component {
     }
 }
 
+function mapStateToProps(state, ownProps){
+    const {selectedIngredients} = state;
+    const selected=selectedIngredients[ownProps.type] || [];
+    console.log('selectedIngredients[ownProps.type]',selectedIngredients[ownProps.type]);
+    const items = state[ownProps.type];
+    return {selected,items}
 
+}
 
-export default Ingredient;
+export default connect(mapStateToProps,{selectIngredient,removeIngredient})(Ingredient);
