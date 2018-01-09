@@ -27,7 +27,6 @@ class Ingredient extends Component {
          this.props.removeIngredient(value,type);
      }
      addSelected(type,value){
-         console.log('addSelected');
          this.props.selectIngredient(value,type);
      }
     handleToggleHops(e) {
@@ -36,7 +35,7 @@ class Ingredient extends Component {
     }
 
     handleCheckbox(e) {
-        console.log(e.target.value);
+        //console.log(e.target.value);
         //this.handleCheckbox(this.props.type,e.target.value,e.target.checked);
         const type=this.props.type;
         const value=e.target.value;
@@ -50,8 +49,6 @@ class Ingredient extends Component {
         return this.props.items.find(function (item) { return item.id == id; });
     }
     isSelected(item) {
-        if(item.id==73) {console.log('check 73',item.name,this.props.selected,this.props.selected.indexOf(item.id));}
-
         return (this.props.selected.indexOf(item.id) > -1)
      }
     onTockenDelete(selected){
@@ -64,7 +61,7 @@ class Ingredient extends Component {
     }
 
     changeSuggestions = (value) => {
-        console.log('Value received from onChange: ' + value)
+        //console.log('Value received from onChange: ' + value)
         const itemsSuggestion = this.props.items.filter(function(item, index, array){
             return (item.name.toLowerCase().indexOf(value.toLowerCase()) === 0)
         });
@@ -130,7 +127,7 @@ class Ingredient extends Component {
 function mapStateToProps(state, ownProps){
     const {selectedIngredients} = state;
     const selected=selectedIngredients[ownProps.type] || [];
-    console.log('selectedIngredients[ownProps.type]',selectedIngredients[ownProps.type]);
+    //console.log('selectedIngredients[ownProps.type]',selectedIngredients[ownProps.type]);
     const items = state[ownProps.type];
     return {selected,items}
 

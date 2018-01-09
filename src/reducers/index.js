@@ -6,13 +6,13 @@ export default (state={selectedIngredients:[]}, action)=>{
     let stateBefore = Object.assign({},state);
     switch(action.type){
         case SET_INGREDIENT:
-            console.log('SET_INGREDIENT');
+            //console.log('SET_INGREDIENT');
             const {newIngredients,ingredientType} = action;
            // const ingredients = Object.assign({}, state);
             //stateBefore[ingredientType]=newIngredients
             return {...state,[ingredientType]:newIngredients};
         case SELECT_INGREDIENT:
-            console.log('SELECT_INGREDIENT');
+            //console.log('SELECT_INGREDIENT');
             const {selected,selectedType} = action;
             let newSelected=[
                 ...(state.selectedIngredients[selectedType] || []),
@@ -24,13 +24,13 @@ export default (state={selectedIngredients:[]}, action)=>{
                     }
                  }
         case REMOVE_INGREDIENT:
-            console.log('REMOVE_INGREDIENT');
+           //console.log('REMOVE_INGREDIENT');
             const {removed,removedType} = action;
             const removedSelected = stateBefore['selectedIngredients'][removedType].filter(
                 a =>
                 a != removed
             );
-            console.log('removedSelected',removedSelected);
+            //console.log('removedSelected',removedSelected);
 
             return { ...state,
                 selectedIngredients: {
@@ -40,10 +40,9 @@ export default (state={selectedIngredients:[]}, action)=>{
             }
         case SIGNED_IN:
             const { email } = action;
-
-            const user = {
-                email
-            }
+            let user;
+            if(email)  user = {email}
+            else user=null;
             return {...state,user};
         default:
             return state;

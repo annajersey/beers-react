@@ -63,7 +63,7 @@ class myApp extends Component {
     }
     render() {
         //console.log(Helper.urls);
-        console.log('this.props',this.props);
+        //console.log('this.props',this.props);
         if (this.state.requestFailed) return <p>Request Failed!</p>
         const {hops,malts,yeasts,beers} = this.props;
 
@@ -93,7 +93,7 @@ class myApp extends Component {
 }
 
 function mapStateToProps(state){
-    console.log('state',state);
+    //console.log('state',state);
     const {beers=[],selectedIngredients} = state;
     return {beers,selectedIngredients}
 
