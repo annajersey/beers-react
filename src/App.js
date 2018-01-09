@@ -4,14 +4,9 @@ import MyApp from './myApp'
 import Beer from './components/Beer'
 
 import './App.css';
-const Main = () => (
-    <main>
-        <Switch>
-            <Route exact path='/' component={MyApp}/>
-            <Route path='/beer/:beerId' component={Beer}/>
-        </Switch>
-    </main>
-)
+import SignIn from "./components/SignIn";
+import SignUp from "./components/SignUp";
+
 class App extends Component {
 
   render() {
@@ -21,11 +16,18 @@ class App extends Component {
               <div className="container">
                 <Link to={`/`} className="navbar-brand">
                   <span className="icon-bar"></span>Home Brewer</Link>
+                  <Link to={`/signin`} className="nav-link">
+                      <span className="icon-bar"></span>Sign In</Link>
 
               </div>
           </nav>
 
-          <Main />
+          <Switch>
+              <Route exact path='/' component={MyApp}/>
+              <Route path='/beer/:beerId' component={Beer}/>
+              <Route path="/signin" component={SignIn} />
+              <Route path="/signup" component={SignUp} />
+          </Switch>
       </div>
     );
   }

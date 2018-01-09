@@ -6,6 +6,9 @@ body{
 h3 .fa-caret-down{color:dimgray;font-size: 26px; display:block;}
 i.glyphicon{font-size:16px; }
 .row{margin:20px 10px;}
+.abv-table th{text-align:center}
+.food{clear:both; margin-bottom:5px; overflow:hidden}
+.food img{width:32%;margin-right:2px; float:left}
 .beers-table{margin-top:15px;}
 .glyphicon-refresh-animate {
     -animation: spin .7s infinite linear;

@@ -20,7 +20,7 @@ class Beers extends Component {
                     { this.props.beers.map((beer) => {
                         return (<tr className="d-flex" key={beer.id}>
                                 <td className="col-sm-3">
-                                    <Link to={`/beer/${beer.id}`}> {beer.beerTitle} </Link>
+                                    <Link to={`/beer/${beer.id}`}> {beer.name} </Link>
                                 </td>
                                 <td className="col-sm-3">{beer.beerSubTitle}</td>
                                 <td><b className="clearfix">ABV</b>{beer.basics_abv}%</td>

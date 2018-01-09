@@ -5,7 +5,7 @@ import Beers from './components/Beers'
 import Ingredient from './components/Ingredient'
 import Helper from './components/Helper'
 import {FormGroup,FormControl} from 'react-bootstrap';
-import {setHops} from './actions';
+import {setIngredient} from './actions';
 const urls=Helper.getUrls();
 
 const hopsUrl = urls.hopsUrl;
@@ -37,7 +37,7 @@ class myApp extends Component {
                     [type]: d,
                     [type+"Loading"]:false
                 })
-                this.props.setHops(d,type);
+                this.props.setIngredient(d,type);
 
             }, () => {
                 this.setState({
@@ -47,14 +47,14 @@ class myApp extends Component {
     }
     componentDidMount() {
         this.getJSON(hopsUrl,"hops");
-        this.getJSON(maltsUrl,"malts");
+        this.getJSON(maltsUrl,"malt");
         this.getJSON(yeastsUrl,"yeasts");
     }
 
     Search(){
         this.setState({beersLoading:true});
 
-        let selectedIngredients = Object.assign({}, this.props.selectedIngredients);
+        let selectedIngredients =  this.props.selectedIngredients;
         let beersUrl = searchUrl+'?'+Object.keys(selectedIngredients)
             .map(type => type + '=' + selectedIngredients[type].join(','))
             .join('&');
@@ -72,7 +72,7 @@ class myApp extends Component {
                 <div className="container">
                     <FormGroup>
                     <Ingredient title="Hops" type="hops" />
-                    <Ingredient  title="Malt" type="malts" />
+                    <Ingredient  title="Malt" type="malt" />
                     <Ingredient  title="Yeasts" type="yeasts" />
                     <div className="container">
                         <div className="row">
@@ -98,6 +98,6 @@ function mapStateToProps(state){
     return {beers,selectedIngredients}
 
 }
-export default connect(mapStateToProps,{setHops})(myApp);
+export default connect(mapStateToProps,{setIngredient})(myApp);
 
 

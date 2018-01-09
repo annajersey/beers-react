@@ -1,6 +1,11 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom'
 import Helper from './Helper'
+import {
+    ShareButtons,
+    ShareCounts,
+    generateShareIcon
+} from 'react-share';
 class Beer extends Component {
 
     constructor(props) {
@@ -40,7 +45,7 @@ class Beer extends Component {
         if (this.state.requestFailed) return <p>Request Failed!</p>
         const {beer} = this.state;
         if (!beer) return (<div className="container"><p><span
-                class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
+            class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
             Loading {this.props.title}...</p></div>);
         const malts = beer.beerToMalt.map(malt => {
             return (
@@ -69,6 +74,28 @@ class Beer extends Component {
         })
         const mashTemps = JSON.parse(beer.method_mash_temp);
 
+        const {
+            FacebookShareButton,
+            GooglePlusShareButton,
+
+            TwitterShareButton,
+
+            VKShareButton
+
+        } = ShareButtons;
+        const food =
+            <div className="food">
+                <div className="square">
+                    <img src={ require(`../images/${beer.id}/1.png`) } />
+                </div>
+                <div className="square">
+                    <img src={ require(`../images/${beer.id}/2.png`) } />
+                </div>
+                <div className="square">
+                    <img src={ require(`../images/${beer.id}/3.png`) } />
+                </div>
+            </div>
+
 
 
 
@@ -77,7 +104,7 @@ class Beer extends Component {
                 <div className="row">
 
                     <div className="col-lg-9">
-                        <h1><span className="grey">#{beer.id}</span>
+                        <h1><span className="grey">#{beer.id} </span>
                             {beer.name}<span class="grey">{beer.beerSubName}</span></h1>
                     </div>
                     <div className="col-lg-9">
@@ -85,7 +112,7 @@ class Beer extends Component {
                     </div>
 
                     <div className="col-lg-3">
-                        <table width="100%">
+                        <table width="100%" className="abv-table">
                             <tr>
                                 <th width="33%">ABV</th>
                                 <th width="33%">IBU</th>
@@ -195,7 +222,52 @@ class Beer extends Component {
                                 </div>
 
                             </div>
+                            <div class="square">
+                                <div class="numbers">
+                                    <table>
+                                        <thead>
+                                        <td><strong>FERMENTATION</strong></td>
+                                        </thead>
+                                        <tr>
+                                            <td>{beer.method_fermentation}&deg;C</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div>
+                                    <table>
+
+                                        <thead>
+                                        <th>TWIST</th>
+                                        </thead>
+                                        <tr>
+                                            <td>{beer.method_twist}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
+                        <div>
+                            <h3><i class="fa fa-info-circle" aria-hidden="true"></i> THIS BEER IS</h3>
+                            <table>
+                                <tr>
+                                    <td><p>{beer.beerDescription}</p></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div>
+                            <h3><i className="fa fa-cutlery"></i> FOOD PAIRING</h3>
+
+                            {food}
+                         </div>
+                        <br />
+                            <div>
+                                <h3><i class="fa fa-lightbulb-o" aria-hidden="true"></i> BREWER'S TIP</h3>
+                                <table>
+                                    <tr>
+                                        <td>{beer.beerTips}</td>
+                                    </tr>
+                                </table>
+                            </div>
                     </div>
                 </div>
             </div>

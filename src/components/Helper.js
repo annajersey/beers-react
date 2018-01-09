@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 class Helper  {
 
     static getUrls() {
-        const apiUrl="http://localhost:8080/beers/json";
+        const apiUrl="http://178.150.105.118:8082/beers/json";
         return {
             hopsUrl: apiUrl + "/hops",
             maltsUrl: apiUrl + "/malts",

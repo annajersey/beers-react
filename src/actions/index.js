@@ -1,8 +1,8 @@
 import {SET_INGREDIENT} from "../constants";
 import {SELECT_INGREDIENT} from "../constants";
 import {REMOVE_INGREDIENT} from "../constants";
-
-export function setHops(newIngredients, ingredientType){
+import {SIGNED_IN} from "../constants";
+export function setIngredient(newIngredients, ingredientType){
     const action = {
         type: SET_INGREDIENT,
         newIngredients,
@@ -25,6 +25,14 @@ export function removeIngredient(removed,removedType){
         type: REMOVE_INGREDIENT,
         removed,
         removedType
+    }
+    return action;
+}
+
+export function logUser(email) {
+    const action = {
+        type: SIGNED_IN,
+        email
     }
     return action;
 }

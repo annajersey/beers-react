@@ -24,7 +24,7 @@ class Ingredient extends Component {
     }
 
      removeSelected(type,value){
-         this.props.removeSelectedIngredient(value,type);
+         this.props.removeIngredient(value,type);
      }
      addSelected(type,value){
          console.log('addSelected');
@@ -49,10 +49,10 @@ class Ingredient extends Component {
     getItem(id){
         return this.props.items.find(function (item) { return item.id == id; });
     }
-    isSelected(id) {
-        if(id==73) {console.log('check 73',this.props.selected,this.props.selected.indexOf(id));}
+    isSelected(item) {
+        if(item.id==73) {console.log('check 73',item.name,this.props.selected,this.props.selected.indexOf(item.id));}
 
-        return (this.props.selected.indexOf(id) > -1)
+        return (this.props.selected.indexOf(item.id) > -1)
      }
     onTockenDelete(selected){
 
@@ -88,7 +88,7 @@ class Ingredient extends Component {
             return (
                 <div className="form-check checkbox">
                     <label className="form-check-label">
-                        <input checked={this.isSelected(item.id)}
+                        <input checked={this.isSelected(item)}
                                className="form-check-input"
                                onClick={this.handleCheckbox}
                                type="checkbox" value={item.id} />
