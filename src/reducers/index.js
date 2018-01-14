@@ -1,7 +1,7 @@
 import {SET_INGREDIENT} from "../constants";
 import {SELECT_INGREDIENT} from "../constants";
 import {REMOVE_INGREDIENT} from "../constants";
-import {SIGNED_IN} from "../constants";
+import {SIGNED_IN, SET_FAVS} from "../constants";
 export default (state={selectedIngredients:[]}, action)=>{
     let stateBefore = Object.assign({},state);
     switch(action.type){
@@ -44,6 +44,14 @@ export default (state={selectedIngredients:[]}, action)=>{
             if(email)  user = {email}
             else user=null;
             return {...state,user};
+        case SET_FAVS:
+            const { favorites } = action;
+            console.log('favorites',favorites);
+
+            //if(stateBefore.favorites.includes(favorite))
+                return {...state,favorites};
+            //    else
+           // return {...state,favorite};
         default:
             return state;
     }

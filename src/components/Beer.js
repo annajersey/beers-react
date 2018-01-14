@@ -1,11 +1,14 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom'
 import Helper from './Helper'
+import { favs } from './firebase';
 import {
     ShareButtons,
     ShareCounts,
     generateShareIcon
 } from 'react-share';
+import {connect} from "react-redux";
+import {setFavorites} from "../actions"
 class Beer extends Component {
 
     constructor(props) {
@@ -13,6 +16,7 @@ class Beer extends Component {
         this.state = {
             requestFailed: false,
         }
+        this.addToFav = this.addToFav.bind(this);
     }
 
     componentDidMount() {
@@ -38,8 +42,39 @@ class Beer extends Component {
                 })
             })
 
-    }
+        favs.on('value', snap => {
+            let favorites = [];
+            snap.forEach(fav => {
+                const { email, beer} = fav.val();
+                const serverKey = fav.key;
+                favorites.push( {beer , serverKey});
+            })
+            this.props.setFavorites(favorites);
+        })
 
+    }
+    addToFav() {
+        if(this.props.user){
+        const { email } = this.props.user;
+        const {beer} = this.state;
+            favs.orderByChild("beer").equalTo(beer.id).once("value",snapshot => {
+                const testExists = snapshot.val();
+                if (testExists){
+                    for (var key in testExists) {
+                        favs.child(key).remove();
+                    }
+                    console.log('exists');
+                }else{
+                    favs.push({email, beer: beer.id});
+                    console.log('not exists');
+                }
+        });
+
+
+
+        }
+
+    }
     render() {
 
         if (this.state.requestFailed) return <p>Request Failed!</p>
@@ -83,18 +118,23 @@ class Beer extends Component {
             VKShareButton
 
         } = ShareButtons;
-        const food =
-            <div className="food">
-                <div className="square">
-                    <img src={ require(`../images/${beer.id}/1.png`) } />
+        const food =<div className="food"></div>
+        try {
+            const food =
+                <div className="food">
+                    <div className="square">
+                        <img src={ require(`../images/${beer.id}/1.png`) }/>
+                    </div>
+                    <div className="square">
+                        <img src={ require(`../images/${beer.id}/2.png`) }/>
+                    </div>
+                    <div className="square">
+                        <img src={ require(`../images/${beer.id}/3.png`) }/>
+                    </div>
                 </div>
-                <div className="square">
-                    <img src={ require(`../images/${beer.id}/2.png`) } />
-                </div>
-                <div className="square">
-                    <img src={ require(`../images/${beer.id}/3.png`) } />
-                </div>
-            </div>
+        }catch(ex){
+
+        }
 
 
 
@@ -106,6 +146,7 @@ class Beer extends Component {
                     <div className="col-lg-9">
                         <h1><span className="grey">#{beer.id} </span>
                             {beer.name}<span class="grey">{beer.beerSubName}</span></h1>
+                        <div onClick={this.addToFav}>Add to Fav</div>
                     </div>
                     <div className="col-lg-9">
                         <h3>{beer.beerTitle}<span class="grey">{beer.beerSubTitle}</span></h3>
@@ -275,5 +316,10 @@ class Beer extends Component {
     }
 }
 
+function mapStateToProps(state){
+    console.log('state',state);
+    const {user} = state;
+    return {user}
 
-export default Beer
+}
+export default connect(mapStateToProps,{setFavorites})(Beer);

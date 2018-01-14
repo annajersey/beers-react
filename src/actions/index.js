@@ -1,7 +1,7 @@
 import {SET_INGREDIENT} from "../constants";
 import {SELECT_INGREDIENT} from "../constants";
 import {REMOVE_INGREDIENT} from "../constants";
-import {SIGNED_IN} from "../constants";
+import {SIGNED_IN , SET_FAVS} from "../constants";
 export function setIngredient(newIngredients, ingredientType){
     const action = {
         type: SET_INGREDIENT,
@@ -36,4 +36,10 @@ export function logUser(email) {
     }
     return action;
 }
-
+export function setFavorites(favorites){
+    const action = {
+        type: SET_FAVS,
+        favorites
+    }
+    return action;
+}

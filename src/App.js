@@ -10,6 +10,7 @@ import {connect} from 'react-redux';
 import { firebaseApp } from './components/firebase';
 
 class App extends Component {
+
     signOut() {
         const { history } = this.props;
         firebaseApp.auth().signOut();
